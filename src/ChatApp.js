@@ -37,15 +37,16 @@ function ChatApp({ username }) {
             friendlyName: "msw-global",
             isPrivate: true,
           });
-        } else if (error.body.code === 50400) {
-          console.log("LOL", error.body);
-          channels.on("channelInvited", function (channel) {
-            return channel;
-          });
-        } else if (error.body.code === 54007) {
-          console.log("masuk invite");
-        } else {
-          console.log("masuk");
+        }
+        // else if (error.body.code === 50400) {
+        //   console.log("LOL", error.body);
+        //   channels.on("channelInvited", function (channel) {
+        //     return channel;
+        //   });
+        // } else if (error.body.code === 54007) {
+        //   console.log("masuk invite");
+        // }
+        else {
           handleError(error);
         }
       })
