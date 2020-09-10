@@ -24,13 +24,15 @@ function ChatApp({ username }) {
     client
       .getChannelByUniqueName("dave")
       .then((channel) => {
+        setChannel(channel);
         console.log("first", channel);
-        return channel.invite(username).catch((err) => {
-          console.log(err);
-        });
+        // return channel.add(username).catch((err) => {
+        //   console.log(err);
+        // });
+        return channel;
       })
       .catch((error) => {
-        console.log(error.body.code);
+        console.log(error.body);
         if (error.body.code === 50300) {
           return client.createChannel({
             uniqueName: "msw",
@@ -50,14 +52,14 @@ function ChatApp({ username }) {
           handleError(error);
         }
       })
-      .then(async (channel) => {
+      .then((channel) => {
         console.log(channel);
-        const member = await channel.getMembers();
-        console.log(member);
+        // const member = await channels.getMembers();
+        // console.log(member);
         // setChannel(channel);
-        // setIsLoading(false);
-        // channel.getMessages().then(messagesLoaded);
-        // channel.on("messageAdded", messageAdded);
+        setIsLoading(false);
+        channel.getMessages().then(messagesLoaded);
+        channel.on("messageAdded", messageAdded);
       })
       // .then((data) => {
       //   console.log(data);
@@ -123,7 +125,7 @@ function ChatApp({ username }) {
   };
 
   const messagesLoaded = (message) => {
-    message.items[message.items.length - 1].remove();
+    // message.items[message.items.length - 1].remove();
     let messagesTemp = [];
     message.items.map((item) => {
       messagesTemp.push(twilioMessageToKendoMessage(item));
